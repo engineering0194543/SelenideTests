@@ -19,7 +19,6 @@ public class JiraObjTests {
     AddTicketPage addTicketPage;
     AddCommentPage addCommentPage;
 
-
     @Parameters({"browserName"})
     @BeforeMethod
     public void setUp(String browserName) {
