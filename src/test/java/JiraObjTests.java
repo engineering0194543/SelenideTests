@@ -1,15 +1,12 @@
 import com.codeborne.selenide.Configuration;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import pages.AddCommentPage;
-import pages.AddTicketPage;
-import pages.LoginPage;
-import pages.ViewTicketPage;
+import pages.*;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class JiraObjTests {
@@ -17,6 +14,7 @@ public class JiraObjTests {
     LoginPage loginPage;
     ViewTicketPage viewTicketPage;
     AddTicketPage addTicketPage;
+    AddCancelTicketPage addCancelTicketPage;
     AddCommentPage addCommentPage;
 
 
@@ -45,7 +43,7 @@ public class JiraObjTests {
 //        assertTrue(loginPage.errorMessageIsPresent(expectedResult));
 //    }
 
-    @Test
+    //@Test
     public void successfulLogin() {
         loginPage = new LoginPage();
         loginPage.enterName("webinar5");
@@ -54,7 +52,7 @@ public class JiraObjTests {
         assertTrue(loginPage.isFlagLogin());
     }
 
-    @Test
+    //@Test
     public void viewTicket(){
         successfulLogin();
         viewTicketPage = new ViewTicketPage();
@@ -62,7 +60,7 @@ public class JiraObjTests {
         assertTrue(viewTicketPage.isViewTicket());
     }
 
-    @Test
+    //@Test
     public void addTicket(){
         successfulLogin();
         addTicketPage = new AddTicketPage();
@@ -76,6 +74,20 @@ public class JiraObjTests {
     }
 
     @Test
+    public void cancelCreateIssue(){
+        successfulLogin();
+        addCancelTicketPage = new AddCancelTicketPage();
+        addCancelTicketPage.clickOnCreate();
+        addCancelTicketPage.enterProject("Webinar (WEBINAR)");
+        addCancelTicketPage.enterIssue("Task");
+        addCancelTicketPage.enterSummary("Jira Test Issue");
+        addCancelTicketPage.clickCancel();
+        addCancelTicketPage.acceptAlert();
+        assertFalse(addCancelTicketPage.isFlagPresent());
+
+    }
+
+    //@Test
     public void addComment(){
         viewTicket();
         addCommentPage = new AddCommentPage();
@@ -90,13 +102,13 @@ public class JiraObjTests {
         assertTrue(addCommentPage.isCommentDeleted());
     }
 
-    @Test
+    //@Test
     public void failedTest(){
         viewTicketPage = new ViewTicketPage();
         assertTrue(viewTicketPage.isViewTicket());
     }
 
-    @AfterMethod
+    //@AfterMethod
     public void tearDown() {
         closeWebDriver();
     }
