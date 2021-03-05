@@ -46,8 +46,8 @@ public class JiraObjTests {
     //@Test
     public void successfulLogin() {
         loginPage = new LoginPage();
-        loginPage.enterName("webinar5");
-        loginPage.enterPassword("webinar5");
+        loginPage.enterName("**");
+        loginPage.enterPassword("**");
         loginPage.clickBtnLogin();
         assertTrue(loginPage.isFlagLogin());
     }
